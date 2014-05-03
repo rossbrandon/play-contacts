@@ -1,15 +1,13 @@
 import play.api.db.DB
+import play.api.mvc.{Results, SimpleResult, RequestHeader}
 import play.api.{Application, GlobalSettings}
 import anorm._
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 object Global extends GlobalSettings {
 
-  /****************************************************************
-   * For this module we ignored this file as it is covered in
-   * the next module.  It deletes the in memory contacts collection
-   * and recreates it with some dummy data.
-   *///************************************************************
   override def onStart(app: Application) {
 
     import play.api.Play.current
@@ -20,5 +18,9 @@ object Global extends GlobalSettings {
       SQL("INSERT INTO contacts(name, emailAddress) VALUES('Ollie Hughes', 'ollie@yobriefca.se')").execute()
       SQL("INSERT INTO contacts(name, emailAddress) VALUES('Nate Hughes', 'nate@yobriefca.se')").execute()
     }
+  }
+
+  override def onHandlerNotFound(request: RequestHeader): Future[SimpleResult] = {
+    Future(Results.NotFound(views.html.notFound()))
   }
 }
