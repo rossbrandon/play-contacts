@@ -2,21 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET         /                                     controllers.Application.index
-GET         /contactmgr                           controllers.Contacts.index
-POST        /contactmgr/contact                   controllers.Contacts.create
-GET         /contactmgr/contact/:id               controllers.Contacts.edit(id: Long)
-POST        /contactmgr/contact/:id               controllers.Contacts.update(id: Long)
-POST        /contactmgr/contact/:id/delete        controllers.Contacts.delete(id: Long)
+GET         /                          controllers.Contacts.index
+POST        /contact                   controllers.Contacts.create
+GET         /contact/:id               controllers.Contacts.edit(id: Long)
+POST        /contact/:id               controllers.Contacts.update(id: Long)
+POST        /contact/:id/delete        controllers.Contacts.delete(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                         controllers.Assets.at(path="/public", file)
+GET         /assets/*file              controllers.Assets.at(path="/public", file)
 
-# Test routes
-GET         /token/:id                            controllers.Application.token(id: Long)
-GET         /regex/$id<[0-9]+>                    controllers.Application.regex(id: Long)
-GET         /clob/*path                           controllers.Application.clob(path: String)
-GET         /default                              controllers.Application.token(id: Long = 1000)
-
-# Contact routes
+# WebJar routing (for bootstrap, ...)
+GET         /webjars/*file             controllers.WebJarAssets.at(file)

@@ -1,0 +1,21 @@
+@(id: Long, contact: Form[Contact])
+@import helper._
+@implicitField = @{ FieldConstructor(bootstrapFieldConstructorTemplate.f) }
+
+@layout {
+
+    <h2>Update Contact</h2>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            @helper.form(action = routes.Contacts.update(id)) {
+
+                @helper.inputText(contact("name"), 'class -> "form-control")
+                @helper.inputText(contact("emailAddress"), 'class -> "form-control")
+                <br />
+                <input type="submit" value="Update Contact" class="btn btn-sm btn-info" />
+            }
+        </div>
+    </div>
+}

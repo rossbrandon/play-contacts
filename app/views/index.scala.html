@@ -1,7 +1,54 @@
-@(message: String)
+@(contacts: List[models.Contact], contactForm: Form[models.Contact])
+@import helper._
+@implicitField = @{ FieldConstructor(bootstrapFieldConstructorTemplate.f) }
 
-@main("Welcome to Play") {
+@layout {
 
-    @play20.welcome(message)
+    <h2>New Contact</h2>
 
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            @helper.form(action = routes.Contacts.create){
+                @helper.inputText(contactForm("name"), 'class -> "form-control")
+                @helper.inputText(contactForm("emailAddress"), 'class -> "form-control")
+                <br />
+                <input type="submit" value="New Contact" class="btn btn-sm btn-info" />
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email Address</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(contact <- contacts) {
+                    <tr>
+                        <td>@contact.name</td>
+                        <td>@contact.emailAddress</td>
+                        <td>
+                            <a href='@routes.Contacts.edit(contact.id)'>Edit</a>
+                        </td>
+                        <td>
+                        @helper.form(action = routes.Contacts.delete(contact.id)){
+                            <input type="submit" value="Delete!" class="btn btn-sm btn-danger" />
+                        }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
